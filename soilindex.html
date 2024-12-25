@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Soil Health Card Scheme</title>
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css" />
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;700&display=swap" rel="stylesheet" />
+    <!-- MDB -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/3.10.2/mdb.min.css" rel="stylesheet" />
+    <!-- AOS -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <!-- Animate.css -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
+    <style>
+        :root {
+            --primary-color: #4CAF50;
+            --secondary-color: #45a049;
+            --accent-color: #FFA000;
+            --text-color: #333;
+            --bg-color: #f1f8e9;
+            --card-bg-color: #ffffff;
+        }
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            margin: 0;
+            padding: 0;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+        .navbar {
+            background-color: var(--primary-color);
+            transition: background-color 0.3s ease;
+        }
+        .btn-primary {
+            background-color: var(--primary-color);
+            transition: all 0.3s ease;
+        }
+        .btn-primary:hover {
+            background-color: var(--secondary-color);
+            transform: translateY(-3px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        }
+        .feature-card {
+            transition: all 0.3s ease-in-out;
+            border: none;
+            border-radius: 15px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            background-color: var(--card-bg-color);
+        }
+        .icon-container {
+            background-color: var(--primary-color);
+            color: #fff;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            margin-right: 10px;
+        }
+        .animate-change {
+            animation: fadeInOut 0.5s ease-in-out;
+        }
+        @keyframes fadeInOut {
+            0% { opacity: 0; transform: translateY(-10px); }
+            100% { opacity: 1; transform: translateY(0); }
+        }
+        /* Dark mode styles */
+        body.dark-mode {
+            --primary-color: #388E3C;
+            --secondary-color: #2E7D32;
+            --accent-color: #FFB300;
+            --text-color: #f1f1f1;
+            --bg-color: #121212;
+            --card-bg-color: #1F1F1F;
+        }
+        .dark-mode .navbar {
+            background-color: #1F1F1F;
+        }
+        .dark-mode .feature-card {
+            background-color: var(--card-bg-color);
+            color: var(--text-color);
+        }
+        .dark-mode footer {
+            background-color: #1F1F1F;
+            color: var(--text-color);
+        }
+        .dark-mode footer a {
+            color: var(--accent-color);
+        }
+        /* Dark mode toggle button */
+        .dark-mode-toggle {
+            background-color: transparent;
+            border: none;
+            color: white;
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: color 0.3s ease;
+        }
+        .dark-mode-toggle:hover {
+            color: var(--accent-color);
+        }
+    </style>
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">
+                <img src="https://cdn-icons-png.flaticon.com/512/628/628283.png" height="30" alt="Kheti Mitra Logo" loading="lazy" />
+                <span data-translate="brand">Kheti Mitra</span>
+            </a>
+            <button class="navbar-toggler" type="button" data-mdb-toggle="collapse" data-mdb-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <i class="fas fa-bars"></i>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="dashboard.html"><i class="fas fa-home"></i> <span data-translate="dashboard">Dashboard</span></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="#"><i class="fas fa-seedling"></i> <span data-translate="soil_health">Soil Health</span></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.html"><i class="fas fa-sign-out-alt"></i> <span data-translate="logout">Logout</span></a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-mdb-toggle="dropdown" aria-expanded="false">
+                            <i class="fas fa-language"></i> <span data-translate="language">Language</span>
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <li><a class="dropdown-item language-btn" href="#" data-lang="en">English</a></li>
+                            <li><a class="dropdown-item language-btn" href="#" data-lang="hi">हिंदी (Hindi)</a></li>
+                            <li><a class="dropdown-item language-btn" href="#" data-lang="pa">ਪੰਜਾਬੀ (Punjabi)</a></li>
+                            <li><a class="dropdown-item language-btn" href="#" data-lang="bn">বাংলা (Bengali)</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item">
+                        <button class="dark-mode-toggle" id="darkModeToggle">
+                            <i class="fas fa-moon"></i>
+                        </button>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container my-5">
+        <div class="row justify-content-center">
+            <div class="col-md-10">
+                <div class="card feature-card" data-aos="fade-up">
+                    <div class="card-body">
+                        <h1 class="card-title text-center mb-4" data-translate="soil_health_card_scheme">Soil Health Card Scheme in India</h1>
+                        
+                        <p data-translate="soil_health_card_description">The Soil Health Card (SHC) scheme is a significant initiative related to soil health and soil index in India. It aims to assess and improve the soil fertility and nutrient content in agricultural fields across the country.</p>
+                        
+                        <h2 class="mt-4 mb-3" data-translate="key_points">Key Points about the Soil Health Card Scheme:</h2>
+                        
+                        <ul class="list-unstyled">
+                            <li class="d-flex align-items-center mb-3">
+                                <div class="icon-container">
+                                    <strong>1</strong>
+                                </div>
+                                <div>
+                                    <strong data-translate="objective">Objective:</strong> <span data-translate="objective_description">The primary objective of the Soil Health Card scheme is to provide accurate information to farmers about the nutrient status of their soil.</span>
+                                </div>
+                            </li>
+                            <li class="d-flex align-items-center mb-3">
+                                <div class="icon-container">
+                                    <strong>2</strong>
+                                </div>
+                                <div>
+                                    <strong data-translate="issuance">Issuance of Soil Health Cards:</strong> <span data-translate="issuance_description">Under this scheme, soil samples are collected from farmers' fields, and these samples are then tested in soil testing laboratories.</span>
+                                </div>
+                            </li>
+                            <li class="d-flex align-items-center mb-3">
+                                <div class="icon-container">
+                                    <strong>3</strong>
+                                </div>
+                                <div>
+                                    <strong data-translate="information">Information on Soil Health Cards:</strong> <span data-translate="information_description">The Soil Health Cards contain essential information, including nutrient status, recommendations, pH levels, and more.</span>
+                                </div>
+                            </li>
+                            <li class="d-flex align-items-center mb-3">
+                                <div class="icon-container">
+                                    <strong>4</strong>
+                                </div>
+                                <div>
+                                    <strong data-translate="benefits">Benefits for Farmers:</strong> <span data-translate="benefits_description">Improved crop yields, cost savings, and sustainable agriculture are some of the key benefits.</span>
+                                </div>
+                            </li>
+                            <li class="d-flex align-items-center mb-3">
+                                <div class="icon-container">
+                                    <strong>5</strong>
+                                </div>
+                                <div>
+                                    <strong data-translate="coverage">Coverage:</strong> <span data-translate="coverage_description">The Soil Health Card scheme is a nationwide initiative covering all states and union territories in India.</span>
+                                </div>
+                            </li>
+                            <li class="d-flex align-items-center mb-3">
+                                <div class="icon-container">
+                                    <strong>6</strong>
+                                </div>
+                                <div>
+                                    <strong data-translate="frequency">Frequency of Testing:</strong> <span data-translate="frequency_description">Soil testing and issuance of Soil Health Cards are generally done periodically.</span>
+                                </div>
+                            </li>
+                            <li class="d-flex align-items-center mb-3">
+                                <div class="icon-container">
+                                    <strong>7</strong>
+                                </div>
+                                <div>
+                                    <strong data-translate="digital_initiatives">Digital Initiatives:</strong> <span data-translate="digital_initiatives_description">Some states have developed mobile apps and online portals for easy access to Soil Health Card information.</span>
+                                </div>
+                            </li>
+                            <li class="d-flex align-items-center mb-3">
+                                <div class="icon-container">
+                                    <strong>8</strong>
+                                </div>
+                                <div>
+                                    <strong data-translate="government_support">Government Support:</strong> <span data-translate="government_support_description">The Indian government provides financial support to states for effective implementation.</span>
+                                </div>
+                            </li>
+                        </ul>
+                        
+                        <p data-translate="conclusion">The Soil Health Card scheme plays a crucial role in promoting sustainable agriculture, reducing input costs for farmers, and improving overall agricultural productivity by addressing soil health issues. It is one of the key initiatives aimed at ensuring the long-term health and fertility of Indian soils.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="text-center text-lg-start mt-5">
+        <div class="text-center p-3">
+            © 2023 <span data-translate="footer_text">Kheti Mitra - Empowering Farmers</span>
+            <a href="#">khetimitra.com</a>
+        </div>
+    </footer>
+
+    <!-- MDB -->
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/3.10.2/mdb.min.js"></script>
+    <!-- AOS -->
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        AOS.init();
+
+        const translations = {
+            en: {
+                brand: "Kheti Mitra",
+                dashboard: "Dashboard",
+                soil_health: "Soil Health",
+                logout: "Logout",
+                language: "Language",
+                soil_health_card_scheme: "Soil Health Card Scheme in India",
+                soil_health_card_description: "The Soil Health Card (SHC) scheme is a significant initiative related to soil health and soil index in India. It aims to assess and improve the soil fertility and nutrient content in agricultural fields across the country.",
+                key_points: "Key Points about the Soil Health Card Scheme:",
+                objective: "Objective:",
+                objective_description: "The primary objective of the Soil Health Card scheme is to provide accurate information to farmers about the nutrient status of their soil.",
+                issuance: "Issuance of Soil Health Cards:",
+                issuance_description: "Under this scheme, soil samples are collected from farmers' fields, and these samples are then tested in soil testing laboratories.",
+                information: "Information on Soil Health Cards:",
+                information_description: "The Soil Health Cards contain essential information, including nutrient status, recommendations, pH levels, and more.",
+                benefits: "Benefits for Farmers:",
+                benefits_description: "Improved crop yields, cost savings, and sustainable agriculture are some of the key benefits.",
+                coverage: "Coverage:",
+                coverage_description: "The Soil Health Card scheme is a nationwide initiative covering all states and union territories in India.",
+                frequency: "Frequency of Testing:",
+                frequency_description: "Soil testing and issuance of Soil Health Cards are generally done periodically.",
+                digital_initiatives: "Digital Initiatives:",
+                digital_initiatives_description: "Some states have developed mobile apps and online portals for easy access to Soil Health Card information.",
+                government_support: "Government Support:",
+                government_support_description: "The Indian government provides financial support to states for effective implementation.",
+                conclusion: "The Soil Health Card scheme plays a crucial role in promoting sustainable agriculture, reducing input costs for farmers, and improving overall agricultural productivity by addressing soil health issues. It is one of the key initiatives aimed at ensuring the long-term health and fertility of Indian soils.",
+                footer_text: "Kheti Mitra - Empowering Farmers"
+            },
+            hi: {
+                // Hindi translations
+                brand: "खेती मित्र",
+                dashboard: "डैशबोर्ड",
+                soil_health: "मृदा स्वास्थ्य",
+                logout: "लॉग आउट",
+                language: "भाषा",
+                soil_health_card_scheme: "भारत में मृदा स्वास्थ्य कार्ड योजना",
+                soil_health_card_description: "मृदा स्वास्थ्य कार्ड (एसएचसी) योजना भारत में मृदा स्वास्थ्य और मृदा सूचकांक से संबंधित एक महत्वपूर्ण पहल है। इसका उद्देश्य देश भर में कृषि क्षेत्रों में मिट्टी की उर्वरता और पोषक तत्व सामग्री का आकलन और सुधार करना है।",
+                key_points: "मृदा स्वास्थ्य कार्ड योजना के बारे में प्रमुख बिंदु:",
+                objective: "उद्देश्य:",
+                objective_description: "मृदा स्वास्थ्य कार्ड योजना का प्राथमिक उद्देश्य किसानों को उनकी मिट्टी की पोषक स्थिति के बारे में सटीक जानकारी प्रदान करना है।",
+                issuance: "मृदा स्वास्थ्य कार्ड का जारी करना:",
+                issuance_description: "इस योजना के तहत, किसानों के खेतों से मिट्टी के नमूने एकत्र किए जाते हैं, और फिर इन नमूनों का मृदा परीक्षण प्रयोगशालाओं में परीक्षण किया जाता है।",
+                information: "मृदा स्वास्थ्य कार्ड पर जानकारी:",
+                information_description: "मृदा स्वास्थ्य कार्ड में आवश्यक जानकारी शामिल होती है, जिसमें पोषक तत्वों की स्थिति, सिफारिशें, पीएच स्तर और अधिक शामिल हैं।",
+                benefits: "किसानों के लिए लाभ:",
+                benefits_description: "बेहतर फसल उपज, लागत बचत और टिकाऊ कृषि कुछ प्रमुख लाभ हैं।",
+                coverage: "कवरेज:",
+                coverage_description: "मृदा स्वास्थ्य कार्ड योजना भारत के सभी राज्यों और केंद्र शासित प्रदेशों को कवर करने वाली एक राष्ट्रव्यापी पहल है।",
+                frequency: "परीक्षण की आवृत्ति:",
+                frequency_description: "मृदा परीक्षण और मृदा स्वास्थ्य कार्ड का जारी करना आमतौर पर समय-समय पर किया जाता है।",
+                digital_initiatives: "डिजिटल पहल:",
+                digital_initiatives_description: "कुछ राज्यों ने मृदा स्वास्थ्य कार्ड जानकारी तक आसान पहुंच के लिए मोबाइल ऐप और ऑनलाइन पोर्टल विकसित किए हैं।",
+                government_support: "सरकारी समर्थन:",
+                government_support_description: "भारत सरकार प्रभावी कार्यान्वयन के लिए राज्यों को वित्तीय सहायता प्रदान करती है।",
+                conclusion: "मृदा स्वास्थ्य कार्ड योजना मृदा स्वास्थ्य मुद्दों को संबोधित करके टिकाऊ कृषि को बढ़ावा देने, किसानों के लिए इनपुट लागत को कम करने और समग्र कृषि उत्पादकता में सुधार करने में महत्वपूर्ण भूमिका निभाती है। यह भारतीय मिट्टी के दीर्घकालिक स्वास्थ्य और उर्वरता सुनिश्चित करने के उद्देश्य से की गई प्रमुख पहलों में से एक है।",
+                footer_text: "खेती मित्र - किसानों को सशक्त बनाना"
+            },
+            pa: {
+                // Punjabi translations
+                brand: "ਖੇਤੀ ਮਿੱਤਰ",
+                dashboard: "ਡੈਸ਼ਬੋਰਡ",
+                soil_health: "ਮਿੱਟੀ ਦੀ ਸਿਹਤ",
+                logout: "ਲੌਗ ਆਉਟ",
+                language: "ਭਾਸ਼ਾ",
+                soil_health_card_scheme: "ਭਾਰਤ ਵਿੱਚ ਮਿੱਟੀ ਸਿਹਤ ਕਾਰਡ ਯੋਜਨਾ",
+                soil_health_card_description: "ਮਿੱਟੀ ਸਿਹਤ ਕਾਰਡ (ਐਸਐਚਸੀ) ਯੋਜਨਾ ਭਾਰਤ ਵਿੱਚ ਮਿੱਟੀ ਦੀ ਸਿਹਤ ਅਤੇ ਮਿੱਟੀ ਸੂਚਕਾਂਕ ਨਾਲ ਸਬੰਧਤ ਇੱਕ ਮਹੱਤਵਪੂਰਨ ਪਹਿਲ ਹੈ। ਇਸਦਾ ਉਦੇਸ਼ ਦੇਸ਼ ਭਰ ਦੇ ਖੇਤੀਬਾੜੀ ਖੇਤਰਾਂ ਵਿੱਚ ਮਿੱਟੀ ਦੀ ਉਪਜਾਊ ਸ਼ਕਤੀ ਅਤੇ ਪੋਸ਼ਕ ਤੱਤਾਂ ਦੀ ਸਮੱਗਰੀ ਦਾ ਮੁਲਾਂਕਣ ਅਤੇ ਸੁਧਾਰ ਕਰਨਾ ਹੈ।",
+                key_points: "ਮਿੱਟੀ ਸਿਹਤ ਕਾਰਡ ਯੋਜਨਾ ਬਾਰੇ ਮੁੱਖ ਬਿੰਦੂ:",
+                objective: "ਉਦੇਸ਼:",
+                objective_description: "ਮਿੱਟੀ ਸਿਹਤ ਕਾਰਡ ਯੋਜਨਾ ਦਾ ਮੁੱਖ ਉਦੇਸ਼ ਕਿਸਾਨਾਂ ਨੂੰ ਉਨ੍ਹਾਂ ਦੀ ਮਿੱਟੀ ਦੀ ਪੋਸ਼ਕ ਸਥਿਤੀ ਬਾਰੇ ਸਹੀ ਜਾਣਕਾਰੀ ਪ੍ਰਦਾਨ ਕਰਨਾ ਹੈ।",
+                issuance: "ਮਿੱਟੀ ਸਿਹਤ ਕਾਰਡਾਂ ਦਾ ਜਾਰੀ ਕਰਨਾ:",
+                issuance_description: "ਇਸ ਯੋਜਨਾ ਦੇ ਤਹਿਤ, ਕਿਸਾਨਾਂ ਦੇ ਖੇਤਾਂ ਤੋਂ ਮਿੱਟੀ ਦੇ ਨਮੂਨੇ ਇਕੱਠੇ ਕੀਤੇ ਜਾਂਦੇ ਹਨ, ਅਤੇ ਫਿਰ ਇਨ੍ਹਾਂ ਨਮੂਨਿਆਂ ਦੀ ਮਿੱਟੀ ਜਾਂਚ ਪ੍ਰਯੋਗਸ਼ਾਲਾਵਾਂ ਵਿੱਚ ਜਾਂਚ ਕੀਤੀ ਜਾਂਦੀ ਹੈ।",
+                information: "ਮਿੱਟੀ ਸਿਹਤ ਕਾਰਡਾਂ 'ਤੇ ਜਾਣਕਾਰੀ:",
+                information_description: "ਮਿੱਟੀ ਸਿਹਤ ਕਾਰਡਾਂ ਵਿੱਚ ਜ਼ਰੂਰੀ ਜਾਣਕਾਰੀ ਸ਼ਾਮਲ ਹੁੰਦੀ ਹੈ, ਜਿਸ ਵਿੱਚ ਪੋਸ਼ਕ ਤੱਤਾਂ ਦੀ ਸਥਿਤੀ, ਸਿਫਾਰਸ਼ਾਂ, ਪੀਐਚ ਪੱਧਰ, ਅਤੇ ਹੋਰ ਸ਼ਾਮਲ ਹਨ।",
+                benefits: "ਕਿਸਾਨਾਂ ਲਈ ਲਾਭ:",
+                benefits_description: "ਬਿਹਤਰ ਫਸਲ ਦੀ ਪੈਦਾਵਾਰ, ਲਾਗਤ ਬਚਤ, ਅਤੇ ਟਿਕਾਊ ਖੇਤੀਬਾੜੀ ਕੁਝ ਮੁੱਖ ਲਾਭ ਹਨ।",
+                coverage: "ਕਵਰੇਜ:",
+                coverage_description: "ਮਿੱਟੀ ਸਿਹਤ ਕਾਰਡ ਯੋਜਨਾ ਭਾਰਤ ਦੇ ਸਾਰੇ ਰਾਜਾਂ ਅਤੇ ਕੇਂਦਰ ਸ਼ਾਸਿਤ ਪ੍ਰਦੇਸ਼ਾਂ ਨੂੰ ਕਵਰ ਕਰਨ ਵਾਲੀ ਇੱਕ ਰਾਸ਼ਟਰੀ ਪਹਿਲ ਹੈ।",
+                frequency: "ਟੈਸਟਿੰਗ ਦੀ ਬਾਰੰਬਾਰਤਾ:",
+                frequency_description: "ਮਿੱਟੀ ਦੀ ਜਾਂਚ ਅਤੇ ਮਿੱਟੀ ਸਿਹਤ ਕਾਰਡਾਂ ਦਾ ਜਾਰੀ ਕਰਨਾ ਆਮ ਤੌਰ 'ਤੇ ਸਮੇਂ-ਸਮੇਂ 'ਤੇ ਕੀਤਾ ਜਾਂਦਾ ਹੈ।",
+                digital_initiatives: "ਡਿਜੀਟਲ ਪਹਿਲਕਦਮੀਆਂ:",
+                digital_initiatives_description: "ਕੁਝ ਰਾਜਾਂ ਨੇ ਮਿੱਟੀ ਸਿਹਤ ਕਾਰਡ ਜਾਣਕਾਰੀ ਤੱਕ ਆਸਾਨ ਪਹੁੰਚ ਲਈ ਮੋਬਾਈਲ ਐਪਸ ਅਤੇ ਔਨਲਾਈਨ ਪੋਰਟਲ ਵਿਕਸਿਤ ਕੀਤੇ ਹਨ।",
+                government_support: "ਸਰਕਾਰੀ ਸਹਾਇਤਾ:",
+                government_support_description: "ਭਾਰਤ ਸਰਕਾਰ ਪ੍ਰਭਾਵਸ਼ਾਲੀ ਲਾਗੂਕਰਨ ਲਈ ਰਾਜਾਂ ਨੂੰ ਵਿੱਤੀ ਸਹਾਇਤਾ ਪ੍ਰਦਾਨ ਕਰਦੀ ਹੈ।",
+                conclusion: "ਮਿੱਟੀ ਸਿਹਤ ਕਾਰਡ ਯੋਜਨਾ ਮਿੱਟੀ ਦੀ ਸਿਹਤ ਦੇ ਮੁੱਦਿਆਂ ਨੂੰ ਹੱਲ ਕਰਕੇ ਟਿਕਾਊ ਖੇਤੀਬਾੜੀ ਨੂੰ ਉਤਸ਼ਾਹਿਤ ਕਰਨ, ਕਿਸਾਨਾਂ ਲਈ ਇਨਪੁਟ ਲਾਗਤਾਂ ਨੂੰ ਘਟਾਉਣ, ਅਤੇ ਸਮੁੱਚੀ ਖੇਤੀਬਾੜੀ ਉਤਪਾਦਕਤਾ ਵਿੱਚ ਸੁਧਾਰ ਕਰਨ ਵਿੱਚ ਮਹੱਤਵਪੂਰਨ ਭੂਮਿਕਾ ਨਿਭਾਉਂਦੀ ਹੈ। ਇਹ ਭਾਰਤੀ ਮਿੱਟੀ ਦੀ ਲੰਬੇ ਸਮੇਂ ਦੀ ਸਿਹਤ ਅਤੇ ਉਪਜਾਊ ਸ਼ਕਤੀ ਨੂੰ ਯਕੀਨੀ ਬਣਾਉਣ ਦੇ ਉਦੇਸ਼ ਨਾਲ ਕੀਤੀਆਂ ਗਈਆਂ ਮੁੱਖ ਪਹਿਲਕਦਮੀਆਂ ਵਿੱਚੋਂ ਇੱਕ ਹੈ।",
+                footer_text: "ਖੇਤੀ ਮਿੱਤਰ - ਕਿਸਾਨਾਂ ਨੂੰ ਸ਼ਕਤੀਸ਼ਾਲੀ ਬਣਾਉਣਾ"
+            },
+            bn: {
+                // Bengali translations
+                brand: "খেতি মিত্র",
+                dashboard: "ড্যাশবোর্ড",
+                soil_health: "মাটির স্বাস্থ্য",
+                logout: "লগ আউট",
+                language: "ভাষা",
+                soil_health_card_scheme: "ভারতে মৃত্তিকা স্বাস্থ্য কার্ড প্রকল্প",
+                soil_health_card_description: "মৃত্তিকা স্বাস্থ্য কার্ড (এসএইচসি) প্রকল্প ভারতে মাটির স্বাস্থ্য এবং মাটির সূচক সম্পর্কিত একটি গুরুত্বপূর্ণ উদ্যোগ। এর লক্ষ্য দেশব্যাপী কৃষি ক্ষেত্রে মাটির উর্বরতা এবং পুষ্টি উপাদান মূল্যায়ন এবং উন্নত করা।",
+                key_points: "মৃত্তিকা স্বাস্থ্য কার্ড প্রকল্প সম্পর্কে মূল বিষয়গুলি:",
+                objective: "উদ্দেশ্য:",
+                objective_description: "মৃত্তিকা স্বাস্থ্য কার্ড প্রকল্পের প্রাথমিক উদ্দেশ্য হল কৃষকদের তাদের মাটির পুষ্টি অবস্থা সম্পর্কে সঠিক তথ্য প্রদান করা।",
+                issuance: "মৃত্তিকা স্বাস্থ্য কার্ড জারি করা:",
+                issuance_description: "এই প্রকল্পের অধীনে, কৃষকদের ক্ষেত থেকে মাটির নমুনা সংগ্রহ করা হয় এবং এই নমুনাগুলি মাটি পরীক্ষা ল্যাবরেটরিতে পরীক্ষা করা হয়।",
+                information: "মৃত্তিকা স্বাস্থ্য কার্ডে তথ্য:",
+                information_description: "মৃত্তিকা স্বাস্থ্য কার্ডে প্রয়োজনীয় তথ্য থাকে, যার মধ্যে রয়েছে পুষ্টি অবস্থা, সুপারিশ, পিএইচ মাত্রা এবং আরও অনেক কিছু।",
+                benefits: "কৃষকদের জন্য সুবিধা:",
+                benefits_description: "উন্নত ফসলের ফলন, খরচ সাশ্রয় এবং টেকসই কৃষি কিছু প্রধান সুবিধা।",
+                coverage: "কভারেজ:",
+                coverage_description: "মৃত্তিকা স্বাস্থ্য কার্ড প্রকল্প ভারতের সমস্ত রাজ্য এবং কেন্দ্রশাসিত অঞ্চলগুলিকে কভার করে একটি জাতীয় উদ্যোগ।",
+                frequency: "পরীক্ষার ফ্রিকোয়েন্সি:",
+                frequency_description: "মাটি পরীক্ষা এবং মৃত্তিকা স্বাস্থ্য কার্ড জারি করা সাধারণত নিয়মিতভাবে করা হয়।",
+                digital_initiatives: "ডিজিটাল উদ্যোগ:",
+                digital_initiatives_description: "কিছু রাজ্য মৃত্তিকা স্বাস্থ্য কার্ড তথ্যে সহজ অ্যাক্সেসের জন্য মোবাইল অ্যাপ এবং অনলাইন পোর্টাল তৈরি করেছে।",
+                government_support: "সরকারি সমর্থন:",
+                government_support_description: "ভারত সরকার কার্যকর বাস্তবায়নের জন্য রাজ্যগুলিকে আর্থিক সহায়তা প্রদান করে।",
+                conclusion: "মৃত্তিকা স্বাস্থ্য কার্ড প্রকল্প মাটির স্বাস্থ্য সমস্যাগুলি মোকাবেলা করে টেকসই কৃষি প্রচার, কৃষকদের জন্য ইনপুট খরচ কমানো এবং সামগ্রিক কৃষি উৎপাদনশীলতা উন্নত করার ক্ষেত্রে গুরুত্বপূর্ণ ভূমিকা পালন করে। এটি ভারতীয় মাটির দীর্ঘমেয়াদী স্বাস্থ্য এবং উর্বরতা নিশ্চিত করার লক্ষ্যে নেওয়া প্রধান উদ্যোগগুলির মধ্যে একটি।",
+                footer_text: "খেতি মিত্র - কৃষকদের ক্ষমতায়ন"
+            }
+        };
+
+        let currentLang = 'en';
+
+        function updateContent(lang) {
+            document.querySelectorAll('[data-translate]').forEach(element => {
+                const key = element.getAttribute('data-translate');
+                if (translations[lang] && translations[lang][key]) {
+                    element.textContent = translations[lang][key];
+                }
+            });
+        }
+
+        document.querySelectorAll('.language-btn').forEach(btn => {
+            btn.addEventListener('click', function(e) {
+                e.preventDefault();
+                currentLang = this.getAttribute('data-lang');
+                updateContent(currentLang);
+            });
+        });
+
+        // Initial content update
+        updateContent(currentLang);
+
+        // Dark mode toggle
+        const darkModeToggle = document.getElementById('darkModeToggle');
+        const body = document.body;
+
+        darkModeToggle.addEventListener('click', () => {
+            body.classList.toggle('dark-mode');
+            if (body.classList.contains('dark-mode')) {
+                darkModeToggle.innerHTML = '<i class="fas fa-sun"></i>';
+            } else {
+                darkModeToggle.innerHTML = '<i class="fas fa-moon"></i>';
+            }
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge" />
+    <title>Kheti Mitra - Register</title>
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css" />
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;700&display=swap" rel="stylesheet" />
+    <!-- MDB -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/3.10.2/mdb.min.css" rel="stylesheet" />
+    <!-- AOS -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <!-- Animate.css -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
+    <!-- Custom styles -->
+    <style>
+      /* Same custom styles as the homepage */
+      :root {
+        --primary-color: #4CAF50;
+        --secondary-color: #45a049;
+        --accent-color: #FFA000;
+        --text-color: #333;
+        --bg-color: #f1f8e9;
+      }
+      body {
+        font-family: 'Poppins', sans-serif;
+        background-color: var(--bg-color);
+        color: var(--text-color);
+        transition: background-color 0.3s ease, color 0.3s ease;
+      }
+      .navbar {
+        background-color: var(--primary-color);
+        transition: background-color 0.3s ease;
+      }
+      .btn-primary {
+        background-color: var(--primary-color);
+      }
+      .btn-primary:hover {
+        background-color: var(--secondary-color);
+      }
+      .form-container {
+        background-color: #fff;
+        padding: 30px;
+        border-radius: 15px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        width: 100%;
+        max-width: 500px;
+        margin: 50px auto;
+      }
+      .form-container h2 {
+        text-align: center;
+        margin-bottom: 30px;
+        color: var(--primary-color);
+      }
+      .form-group {
+        margin-bottom: 20px;
+      }
+      .form-group label {
+        font-weight: 600;
+      }
+      .form-group input {
+        width: 100%;
+        padding: 10px;
+        border-radius: 8px;
+        border: 1px solid #ccc;
+        font-size: 16px;
+      }
+      .form-group input:focus {
+        border-color: var(--primary-color);
+      }
+      .btn-register {
+        width: 100%;
+        padding: 10px;
+        background-color: var(--primary-color);
+        border: none;
+        color: white;
+        border-radius: 8px;
+        font-size: 16px;
+      }
+      .btn-register:hover {
+        background-color: var(--secondary-color);
+      }
+      .redirect-login {
+        text-align: center;
+        margin-top: 15px;
+      }
+      .redirect-login a {
+        color: var(--primary-color);
+        text-decoration: none;
+      }
+      .redirect-login a:hover {
+        text-decoration: underline;
+      }
+      /* Dark Mode Styles */
+      body.dark-mode {
+        --primary-color: #388E3C;
+        --secondary-color: #2E7D32;
+        --accent-color: #FFB300;
+        --text-color: #f1f1f1;
+        --bg-color: #121212;
+      }
+      .dark-mode .navbar {
+        background-color: #1F1F1F;
+      }
+      .dark-mode .form-container {
+        background-color: #1F1F1F;
+        color: var(--text-color);
+      }
+      .dark-mode .btn-register {
+        background-color: var(--secondary-color);
+      }
+      .dark-mode .btn-register:hover {
+        background-color: var(--primary-color);
+      }
+      .dark-mode-toggle {
+        background-color: transparent;
+        border: none;
+        color: white;
+        font-size: 1.2rem;
+        cursor: pointer;
+        transition: color 0.3s ease;
+      }
+      .dark-mode-toggle:hover {
+        color: var(--accent-color);
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Animation Overlay -->
+
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark">
+      <div class="container-fluid">
+        <a class="navbar-brand" href="#">
+          <img src="https://cdn-icons-png.flaticon.com/512/628/628283.png" height="30" alt="Kheti Mitra Logo" loading="lazy" />
+          Kheti Mitra
+        </a>
+        <button class="navbar-toggler" type="button" data-mdb-toggle="collapse" data-mdb-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+          <i class="fas fa-bars"></i>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav ms-auto">
+            <li class="nav-item">
+              <a class="nav-link active" href="/index.html"> Home</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/profile.html"> Features</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/settings.html"> About</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/index.html"> Contact</a>
+            </li>
+            <!-- <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-mdb-toggle="dropdown" aria-expanded="false">
+                <i class="fas fa-language"></i> Language
+              </a>
+              <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                <li><a class="dropdown-item" href="#">English</a></li>
+                <li><a class="dropdown-item" href="#">हिंदी (Hindi)</a></li>
+                <li><a class="dropdown-item" href="#">ਪੰਜਾਬੀ (Punjabi)</a></li>
+                <li><a class="dropdown-item" href="#">বাংলা (Bengali)</a></li>
+              </ul>
+            </li> -->
+            <li class="nav-item">
+              <button class="dark-mode-toggle" id="darkModeToggle">
+                <i class="fas fa-moon"></i>
+              </button>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Registration Form -->
+    <div class="form-container">
+      <h2>Register</h2>
+      <form action="/api/register" method="POST">
+        <div class="form-group">
+          <label for="email">Email</label>
+          <input type="email" id="email" name="email" placeholder="Enter your email" required />
+        </div>
+        <div class="form-group">
+          <label for="password">Password</label>
+          <input type="password" id="password" name="password" placeholder="Enter your password" required />
+        </div>
+        <div class="form-group">
+          <label for="confirm-password">Confirm Password</label>
+          <input type="password" id="confirm-password" name="confirm-password" placeholder="Confirm your password" required />
+        </div>
+        <button type="submit" class="btn-register">Register</button>
+      </form>
+      <div class="redirect-login">
+        <p>Already have an account? <a href="/login.html">Login here</a></p>
+      </div>
+    </div>
+
+    <!-- Dark Mode Toggle Script -->
+    <script>
+      const darkModeToggle = document.getElementById("darkModeToggle");
+      darkModeToggle.addEventListener("click", () => {
+        document.body.classList.toggle("dark-mode");
+      });
+    </script>
+  </body>
+</html>

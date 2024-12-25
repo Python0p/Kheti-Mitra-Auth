@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+      fetch('/api/validate-token', {
+        method: 'POST',
+        credentials: 'include', // Include cookies in the request
+      })
+        .then(response => {
+          if (!response.ok) {
+            // Redirect to login page if token is invalid
+            window.location.href = '/login.html';
+          }
+        })
+        .catch(error => {
+          console.error('Error validating token:', error);
+          // Redirect to login page on error
+          window.location.href = '/login.html';
+        });
+    });
+  </script>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Government Policies on Agriculture</title>
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css" />
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;700&display=swap" rel="stylesheet" />
+    <!-- MDB -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/3.10.2/mdb.min.css" rel="stylesheet" />
+    <!-- AOS -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <!-- Animate.css -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
+    <style>
+        :root {
+            --primary-color: #4CAF50;
+            --secondary-color: #45a049;
+            --accent-color: #FFA000;
+            --text-color: #333;
+            --bg-color: #f1f8e9;
+        }
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            margin: 0;
+            padding: 0;
+            transition: background-color 0.3s, color 0.3s;
+        }
+        .navbar {
+            background-color: var(--primary-color);
+            transition: background-color 0.3s ease;
+        }
+        .policy-card {
+            transition: all 0.3s ease-in-out;
+            border: none;
+            border-radius: 15px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            background: linear-gradient(145deg, #ffffff, #f0f0f0);
+            margin-bottom: 20px;
+        }
+        .policy-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+        }
+        .icon-container {
+            background-color: var(--primary-color);
+            color: #fff;
+            width: 50px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            margin-right: 15px;
+            font-size: 1.5rem;
+        }
+        .animate-change {
+            animation: changeAnimation 0.5s ease-in-out;
+        }
+        @keyframes changeAnimation {
+            0% { opacity: 0; transform: translateY(-10px); }
+            100% { opacity: 1; transform: translateY(0); }
+        }
+        /* Dark mode styles */
+        body.dark-mode {
+            --primary-color: #388E3C;
+            --secondary-color: #2E7D32;
+            --accent-color: #FFB300;
+            --text-color: #f1f1f1;
+            --bg-color: #121212;
+        }
+        .dark-mode .navbar {
+            background-color: #1F1F1F;
+        }
+        .dark-mode .policy-card {
+            background: linear-gradient(145deg, #3a3a3a, #2c2c2c);
+            color: var(--text-color);
+        }
+        .dark-mode .icon-container {
+            background-color: var(--primary-color);
+        }
+        .dark-mode footer {
+            background-color: #1F1F1F;
+            color: var(--text-color);
+        }
+        .dark-mode footer a {
+            color: var(--accent-color);
+        }
+        /* Dark mode toggle button */
+        .dark-mode-toggle {
+            background-color: transparent;
+            border: none;
+            color: white;
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: color 0.3s ease;
+        }
+        .dark-mode-toggle:hover {
+            color: #FFD700;
+            text-shadow: 0 0 5px #FFD700, 0 0 10px #FFD700, 0 0 15px #FFD700;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">
+                <img src="https://cdn-icons-png.flaticon.com/512/628/628283.png" height="30" alt="Kheti Mitra Logo" loading="lazy" />
+                <span data-translate="brand">Kheti Mitra</span>
+            </a>
+            <button class="navbar-toggler" type="button" data-mdb-toggle="collapse" data-mdb-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <i class="fas fa-bars"></i>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="dashboard.html"><i class="fas fa-home"></i> <span data-translate="dashboard">Dashboard</span></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="#"><i class="fas fa-file-alt"></i> <span data-translate="govt_policies">Government Policies</span></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.html"><i class="fas fa-sign-out-alt"></i> <span data-translate="logout">Logout</span></a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-mdb-toggle="dropdown" aria-expanded="false">
+                            <i class="fas fa-language"></i> <span data-translate="language">Language</span>
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <li><a class="dropdown-item language-btn" href="#" data-lang="en">English</a></li>
+                            <li><a class="dropdown-item language-btn" href="#" data-lang="hi">हिंदी (Hindi)</a></li>
+                            <li><a class="dropdown-item language-btn" href="#" data-lang="pa">ਪੰਜਾਬੀ (Punjabi)</a></li>
+                            <li><a class="dropdown-item language-btn" href="#" data-lang="bn">বাংলা (Bengali)</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item">
+                        <button class="dark-mode-toggle" id="darkModeToggle">
+                            <i class="fas fa-moon"></i>
+                        </button>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container my-5">
+        <h1 class="text-center mb-5" data-translate="govt_policies_title">Government Policies on Agriculture</h1>
+
+        <div class="row">
+            <div class="col-md-4 mb-4" data-aos="fade-up">
+                <div class="card policy-card h-100">
+                    <div class="card-body">
+                        <div class="d-flex align-items-center mb-3">
+                            <div class="icon-container">
+                                <i class="fas fa-hand-holding-usd"></i>
+                            </div>
+                            <h5 class="card-title mb-0" data-translate="pm_kisan_title">Pradhan Mantri Kisan Samman Nidhi (PM-KISAN)</h5>
+                        </div>
+                        <p class="card-text" data-translate="pm_kisan_desc">
+                            This is a central government scheme that provides direct income support to small and marginal farmers. Under this scheme, eligible farmers receive financial assistance of Rs. 6,000 per year in three equal installments.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-4 mb-4" data-aos="fade-up" data-aos-delay="100">
+                <div class="card policy-card h-100">
+                    <div class="card-body">
+                        <div class="d-flex align-items-center mb-3">
+                            <div class="icon-container">
+                                <i class="fas fa-shopping-cart"></i>
+                            </div>
+                            <h5 class="card-title mb-0" data-translate="enam_title">National Agriculture Market (e-NAM)</h5>
+                        </div>
+                        <p class="card-text" data-translate="enam_desc">
+                            The e-NAM is an electronic trading platform that aims to create a unified national market for agricultural commodities. It allows farmers to sell their produce online and provides better price discovery and transparency.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-4 mb-4" data-aos="fade-up" data-aos-delay="200">
+                <div class="card policy-card h-100">
+                    <div class="card-body">
+                        <div class="d-flex align-items-center mb-3">
+                            <div class="icon-container">
+                                <i class="fas fa-shield-alt"></i>
+                            </div>
+                            <h5 class="card-title mb-0" data-translate="pmfby_title">Pradhan Mantri Fasal Bima Yojana (PMFBY)</h5>
+                        </div>
+                        <p class="card-text" data-translate="pmfby_desc">
+                            PMFBY is a crop insurance scheme that provides financial protection to farmers in case of crop loss due to natural calamities. Both farmers and the government contribute to the premium, making it affordable for farmers.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-light text-center text-lg-start mt-5">
+        <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2);">
+            © 2023 <span data-translate="footer_text">Kheti Mitra - Empowering Farmers</span>
+            <a class="text-dark" href="#">khetimitra.com</a>
+        </div>
+    </footer>
+
+    <!-- MDB -->
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/3.10.2/mdb.min.js"></script>
+    <!-- AOS -->
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        AOS.init();
+
+        const translations = {
+            en: {
+                brand: "Kheti Mitra",
+                dashboard: "Dashboard",
+                govt_policies: "Government Policies",
+                logout: "Logout",
+                language: "Language",
+                govt_policies_title: "Government Policies on Agriculture",
+                pm_kisan_title: "Pradhan Mantri Kisan Samman Nidhi (PM-KISAN)",
+                pm_kisan_desc: "This is a central government scheme that provides direct income support to small and marginal farmers. Under this scheme, eligible farmers receive financial assistance of Rs. 6,000 per year in three equal installments.",
+                enam_title: "National Agriculture Market (e-NAM)",
+                enam_desc: "The e-NAM is an electronic trading platform that aims to create a unified national market for agricultural commodities. It allows farmers to sell their produce online and provides better price discovery and transparency.",
+                pmfby_title: "Pradhan Mantri Fasal Bima Yojana (PMFBY)",
+                pmfby_desc: "PMFBY is a crop insurance scheme that provides financial protection to farmers in case of crop loss due to natural calamities. Both farmers and the government contribute to the premium, making it affordable for farmers.",
+                footer_text: "Kheti Mitra - Empowering Farmers"
+            },
+            hi: {
+                brand: "खेती मित्र",
+                dashboard: "डैशबोर्ड",
+                govt_policies: "सरकारी नीतियाँ",
+                logout: "लॉग आउट",
+                language: "भाषा",
+                govt_policies_title: "कृषि पर सरकारी नीतियाँ",
+                pm_kisan_title: "प्रधानमंत्री किसान सम्मान निधि (पीएम-किसान)",
+                pm_kisan_desc: "यह एक केंद्रीय सरकार की योजना है जो छोटे और सीमांत किसानों को प्रत्यक्ष आय सहायता प्रदान करती है। इस योजना के तहत, पात्र किसानों को तीन समान किस्तों में प्रति वर्ष 6,000 रुपये की वित्तीय सहायता मिलती है।",
+                enam_title: "राष्ट्रीय कृषि बाजार (ई-नाम)",
+                enam_desc: "ई-नाम एक इलेक्ट्रॉनिक ट्रेडिंग प्लेटफॉर्म है जिसका उद्देश्य कृषि वस्तुओं के लिए एक एकीकृत राष्ट्रीय बाजार बनाना है। यह किसानों को अपनी उपज ऑनलाइन बेचने की अनुमति देता है और बेहतर मूल्य खोज और पारदर्शिता प्रदान करता है।",
+                pmfby_title: "प्रधानमंत्री फसल बीमा योजना (पीएमएफबीवाई)",
+                pmfby_desc: "पीएमएफबीवाई एक फसल बीमा योजना है जो प्राकृतिक आपदाओं के कारण फसल के नुकसान की स्थिति में किसानों को वित्तीय सुरक्षा प्रदान करती है। प्रीमियम में किसान और सरकार दोनों का योगदान होता है, जिससे यह किसानों के लिए किफायती हो जाता है।",
+                footer_text: "खेती मित्र - किसानों को सशक्त बनाना"
+            },
+            pa: {
+                brand: "ਖੇਤੀ ਮਿੱਤਰ",
+                dashboard: "ਡੈਸ਼ਬੋਰਡ",
+                govt_policies: "ਸਰਕਾਰੀ ਨੀਤੀਆਂ",
+                logout: "ਲੌਗ ਆਊਟ",
+                language: "ਭਾਸ਼ਾ",
+                govt_policies_title: "ਖੇਤੀਬਾੜੀ 'ਤੇ ਸਰਕਾਰੀ ਨੀਤੀਆਂ",
+                pm_kisan_title: "ਪ੍ਰਧਾਨ ਮੰਤਰੀ ਕਿਸਾਨ ਸਮਾਨ ਨਿਧੀ (ਪੀਐਮ-ਕਿਸਾਨ)",
+                pm_kisan_desc: "ਇਹ ਇੱਕ ਕੇਂਦਰੀ ਸਰਕਾਰ ਦੀ ਯੋਜਨਾ ਹੈ ਜੋ ਛੋਟੇ ਅਤੇ ਸੀਮਾਂਤ ਕਿਸਾਨਾਂ ਨੂੰ ਸਿੱਧੀ ਆਮਦਨ ਸਹਾਇਤਾ ਪ੍ਰਦਾਨ ਕਰਦੀ ਹੈ। ਇਸ ਯੋਜਨਾ ਦੇ ਤਹਿਤ, ਯੋਗ ਕਿਸਾਨਾਂ ਨੂੰ ਤਿੰਨ ਬਰਾਬਰ ਕਿਸ਼ਤਾਂ ਵਿੱਚ ਸਾਲਾਨਾ 6,000 ਰੁਪਏ ਦੀ ਵਿੱਤੀ ਸਹਾਇਤਾ ਮਿਲਦੀ ਹੈ।",
+                enam_title: "ਰਾਸ਼ਟਰੀ ਖੇਤੀਬਾੜੀ ਬਾਜ਼ਾਰ (ਈ-ਨਾਮ)",
+                enam_desc: "ਈ-ਨਾਮ ਇੱਕ ਇਲੈਕਟ੍ਰਾਨਿਕ ਵਪਾਰ ਪਲੇਟਫਾਰਮ ਹੈ ਜਿਸਦਾ ਉਦੇਸ਼ ਖੇਤੀਬਾੜੀ ਵਸਤੂਆਂ ਲਈ ਇੱਕ ਏਕੀਕ੍ਰਿਤ ਰਾਸ਼ਟਰੀ ਬਾਜ਼ਾਰ ਬਣਾਉਣਾ ਹੈ। ਇਹ ਕਿਸਾਨਾਂ ਨੂੰ ਆਪਣੀ ਉਪਜ ਆਨਲਾਈਨ ਵੇਚਣ ਦੀ ਇਜਾਜ਼ਤ ਦਿੰਦਾ ਹੈ ਅਤੇ ਬਿਹਤਰ ਕੀਮਤ ਖੋਜ ਅਤੇ ਪਾਰਦਰਸ਼ਤਾ ਪ੍ਰਦਾਨ ਕਰਦਾ ਹੈ।",
+                pmfby_title: "ਪ੍ਰਧਾਨ ਮੰਤਰੀ ਫਸਲ ਬੀਮਾ ਯੋਜਨਾ (ਪੀਐਮਐਫਬੀਵਾਈ)",
+                pmfby_desc: "ਪੀਐਮਐਫਬੀਵਾਈ ਇੱਕ ਫਸਲ ਬੀਮਾ ਯੋਜਨਾ ਹੈ ਜੋ ਕੁਦਰਤੀ ਆਫ਼ਤਾਂ ਕਾਰਨ ਫਸਲ ਦੇ ਨੁਕਸਾਨ ਦੀ ਸਥਿਤੀ ਵਿੱਚ ਕਿਸਾਨਾਂ ਨੂੰ ਵਿੱਤੀ ਸੁਰੱਖਿਆ ਪ੍ਰਦਾਨ ਕਰਦੀ ਹੈ। ਪ੍ਰੀਮੀਅਮ ਵਿੱਚ ਕਿਸਾਨ ਅਤੇ ਸਰਕਾਰ ਦੋਵੇਂ ਯੋਗਦਾਨ ਪਾਉਂਦੇ ਹਨ, ਜਿਸ ਨਾਲ ਇਹ ਕਿਸਾਨਾਂ ਲਈ ਕਿਫਾਇਤੀ ਬਣ ਜਾਂਦੀ ਹੈ।",
+                footer_text: "ਖੇਤੀ ਮਿੱਤਰ - ਕਿਸਾਨਾਂ ਨੂੰ ਸ਼ਕਤੀਸ਼ਾਲੀ ਬਣਾਉਣਾ"
+            },
+            bn: {
+                brand: "খেতি মিত্র",
+                dashboard: "ড্যাশবোর্ড",
+                govt_policies: "সরকারি নীতি",
+                logout: "লগ আউট",
+                language: "ভাষা",
+                govt_policies_title: "কৃষি সম্পর্কিত সরকারি নীতি",
+                pm_kisan_title: "প্রধানমন্ত্রী কিষাণ সম্মান নিধি (পিএম-কিষাণ)",
+                pm_kisan_desc: "এটি একটি কেন্দ্রীয় সরকারি প্রকল্প যা ক্ষুদ্র ও প্রান্তিক কৃষকদের সরাসরি আয় সহায়তা প্রদান করে। এই প্রকল্পের অধীনে, যোগ্য কৃষকরা তিনটি সমান কিস্তিতে বছরে ৬,০০০ টাকা আর্থিক সহায়তা পান।",
+                enam_title: "জাতীয় কৃষি বাজার (ই-নাম)",
+                enam_desc: "ই-নাম একটি ইলেকট্রনিক ট্রেডিং প্ল্যাটফর্ম যার লক্ষ্য কৃষি পণ্যের জন্য একটি একীভূত জাতীয় বাজার তৈরি করা। এটি কৃষকদের তাদের উৎপাদন অনলাইনে বিক্রি করতে দেয় এবং উন্নত মূল্য আবিষ্কার ও স্বচ্ছতা প্রদান করে।",
+                pmfby_title: "প্রধানমন্ত্রী ফসল বীমা যোজনা (পিএমএফবিওয়াই)",
+                pmfby_desc: "পিএমএফবিওয়াই একটি ফসল বীমা প্রকল্প যা প্রাকৃতিক দুর্যোগের কারণে ফসল ক্ষতির ক্ষেত্রে কৃষকদের আর্থিক সুরক্ষা প্রদান করে। কৃষক ও সরকার উভয়ই প্রিমিয়ামে অবদান রাখে, যা এটিকে কৃষকদের জন্য সাশ্রয়ী করে তোলে।",
+                footer_text: "খেতি মিত্র - কৃষকদের ক্ষমতায়ন"
+            }
+        };
+
+        let currentLang = 'en';
+
+        function updateContent(lang) {
+            document.querySelectorAll('[data-translate]').forEach(element => {
+                const key = element.getAttribute('data-translate');
+                if (translations[lang] && translations[lang][key]) {
+                    element.classList.remove('animate-change');
+                    void element.offsetWidth; // Trigger reflow
+                    element.classList.add('animate-change');
+                    element.textContent = translations[lang][key];
+                }
+            });
+        }
+
+        document.querySelectorAll('.language-btn').forEach(btn => {
+            btn.addEventListener('click', function(e) {
+                e.preventDefault();
+                currentLang = this.getAttribute('data-lang');
+                updateContent(currentLang);
+            });
+        });
+
+        // Initial content update
+        updateContent(currentLang);
+
+        // Dark mode toggle functionality
+        const darkModeToggle = document.getElementById('darkModeToggle');
+        const body = document.body;
+        const icon = darkModeToggle.querySelector('i');
+
+        // Check for saved dark mode preference
+        if (localStorage.getItem('darkMode') === 'enabled') {
+            body.classList.add('dark-mode');
+            icon.classList.remove('fa-moon');
+            icon.classList.add('fa-sun');
+        }
+
+        darkModeToggle.addEventListener('click', () => {
+            body.classList.toggle('dark-mode');
+            if (body.classList.contains('dark-mode')) {
+                localStorage.setItem('darkMode', 'enabled');
+                icon.classList.remove('fa-moon');
+                icon.classList.add('fa-sun');
+            } else {
+                localStorage.setItem('darkMode', null);
+                icon.classList.remove('fa-sun');
+                icon.classList.add('fa-moon');
+            }
+        });
+    </script>
+</body>
+</html>
