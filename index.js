@@ -20,10 +20,21 @@ app.use(cookieParser()); // Add cookie-parser middleware
 // Serve static files (HTML, CSS, JS) from 'views' folder
 app.use(express.static(path.join(__dirname, 'views')));
 
-// Connect to MongoDB
+// Connect to MongoDB first
 mongoose.connect(process.env.MONGO_URI, { useNewUrlParser: true, useUnifiedTopology: true })
-  .then(() => console.log('MongoDB connected'))
-  .catch(err => console.error('MongoDB connection error:', err));
+  .then(() => {
+    console.log('MongoDB connected');
+
+    // Start the server after successful MongoDB connection
+    const PORT = process.env.PORT || 3000;
+    app.listen(PORT, () => {
+      console.log(`Server running on port ${PORT}`);
+    });
+  })
+  .catch(err => {
+    console.error('MongoDB connection error:', err);
+    process.exit(1); // Exit process if MongoDB connection fails
+  });
 
 // Define User schema and model
 const userSchema = new mongoose.Schema({
@@ -108,10 +119,4 @@ app.post('/login', async (req, res) => {
 // Validate token route (for frontend to call)
 app.post('/validate-token', verifyToken, (req, res) => {
   res.status(200).json({ message: 'Token is valid' });
-});
-
-// Start the server
-const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`);
 });
