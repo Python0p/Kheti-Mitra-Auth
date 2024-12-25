@@ -4,7 +4,8 @@ const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const dotenv = require('dotenv');
 const path = require('path');
-const cookieParser = require('cookie-parser'); // Import cookie-parser
+const cookieParser = require('cookie-parser');
+const cors = require('cors'); // Add CORS for cross-origin requests
 
 // Load environment variables
 dotenv.config();
@@ -15,7 +16,13 @@ const app = express();
 // Middleware for parsing JSON, form-urlencoded data, and cookies
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.use(cookieParser()); // Add cookie-parser middleware
+app.use(cookieParser());
+
+// CORS Configuration
+app.use(cors({
+  origin: 'https://kheti-mitra-only-frontend.vercel.app', // Your frontend URL
+  credentials: true, // Allow credentials (cookies)
+}));
 
 // Serve static files (HTML, CSS, JS) from 'views' folder
 app.use(express.static(path.join(__dirname, 'views')));
@@ -109,24 +116,32 @@ app.post('/login', async (req, res) => {
     }
 
     const token = generateToken(user._id);
-    
+
     // Store token in HttpOnly cookie
     res.cookie('jwt', token, {
       httpOnly: true, // Cookie can't be accessed by JavaScript
-      secure: process.env.NODE_ENV === 'production', // Set to true only in production (ensures cookie is only sent over HTTPS)
-      sameSite: 'Strict', // Ensures cookie is sent only in same-site requests (helps mitigate CSRF)
+      secure: process.env.NODE_ENV === 'production', // Ensure HTTPS in production
+      sameSite: 'Strict', // Prevent CSRF attacks
       maxAge: 24 * 60 * 60 * 1000, // Cookie expiry time (1 day)
     });
 
-    // Redirect to the frontend page after successful login
-    res.redirect('https://kheti-mitra-only-frontend.vercel.app/index.html');
+    res.status(200).json({ message: 'Login successful' }); // Send JSON response for frontend handling
   } catch (err) {
     res.status(500).json({ message: 'Server error', error: err.message });
   }
 });
 
 // Validate token route (for frontend to call)
-app.post('/validate-token', verifyToken, (req, res) => {
-  res.status(200).json({ message: 'Token is valid' });
+app.get('/validate-token', verifyToken, (req, res) => {
+  res.status(200).json({ message: 'Token is valid', userId: req.userId });
 });
 
+// Logout route
+app.post('/logout', (req, res) => {
+  res.clearCookie('jwt', {
+    httpOnly: true,
+    secure: process.env.NODE_ENV === 'production',
+    sameSite: 'Strict',
+  });
+  res.status(200).json({ message: 'Logout successful' });
+});
