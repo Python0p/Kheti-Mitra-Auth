@@ -119,7 +119,7 @@ app.post('/api/login', async (req, res) => {
     });
 
     // Redirect to the frontend page after successful login
-    res.redirect('https://kheti-mitra-only-frontend.vercel.app/index.html');
+    res.redirect('/index.html');
   } catch (err) {
     res.status(500).json({ message: 'Server error', error: err.message });
   }
