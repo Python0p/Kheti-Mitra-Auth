@@ -1,0 +1,557 @@
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    fetch('https://kheti-mitra-auth.vercel.app/validate-token', {
+      method: 'POST',
+      credentials: 'include', // Include cookies in the request
+    })
+      .then(response => {
+        if (!response.ok) {
+          // Redirect to login page if token is invalid
+          window.location.href = '/login.html';
+        }
+      })
+      .catch(error => {
+        console.error('Error validating token:', error);
+        // Redirect to login page on error
+        window.location.href = '/login.html';
+      });
+  });
+</script>
+
+
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge" />
+    <title>Kheti Mitra - Farmer Dashboard</title>
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css" />
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;700&display=swap" rel="stylesheet" />
+    <!-- MDB -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/3.10.2/mdb.min.css" rel="stylesheet" />
+    <!-- AOS -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <!-- Animate.css -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
+    <!-- Custom styles -->
+    <style>
+      :root {
+        --primary-color: #4CAF50;
+        --secondary-color: #45a049;
+        --accent-color: #FFA000;
+        --text-color: #333;
+        --bg-color: #f1f8e9;
+      }
+      body {
+        font-family: 'Poppins', sans-serif;
+        background-color: var(--bg-color);
+        color: var(--text-color);
+        transition: background-color 0.3s ease, color 0.3s ease;
+      }
+      .navbar {
+        background-color: var(--primary-color);
+        transition: background-color 0.3s ease;
+      }
+      .btn-primary {
+        background-color: var(--primary-color);
+      }
+      .btn-primary:hover {
+        background-color: var(--secondary-color);
+      }
+      .feature-card {
+        transition: all 0.3s ease-in-out;
+        border: none;
+        border-radius: 15px;
+        box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+      }
+      .feature-card:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+      }
+      .feature-icon {
+        font-size: 3rem;
+        color: var(--accent-color);
+      }
+      .weather-icon {
+        font-size: 4rem;
+        color: var(--accent-color);
+      }
+      .crop-calendar {
+        background-color: #fff;
+        border-radius: 15px;
+        padding: 20px;
+        box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        transition: background-color 0.3s ease, color 0.3s ease;
+      }
+      .animation-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.8);
+        display: none;
+        justify-content: center;
+        align-items: center;
+        z-index: 9999;
+      }
+      .animation-content {
+        text-align: center;
+        color: white;
+      }
+      .language-btn {
+        transition: all 0.3s ease;
+      }
+      .language-btn:hover {
+        transform: scale(1.1);
+      }
+      .translate-fade {
+        transition: opacity 0.3s ease-in-out;
+      }
+      .translate-fade.fade-out {
+        opacity: 0;
+      }
+      .translate-fade.fade-in {
+        opacity: 1;
+      }
+      /* Dark mode styles */
+      body.dark-mode {
+        --primary-color: #388E3C;
+        --secondary-color: #2E7D32;
+        --accent-color: #FFB300;
+        --text-color: #f1f1f1;
+        --bg-color: #121212;
+      }
+      .dark-mode .navbar {
+        background-color: #1F1F1F;
+      }
+      .dark-mode .feature-card,
+      .dark-mode .crop-calendar {
+        background-color: #1F1F1F;
+        color: var(--text-color);
+      }
+      .dark-mode .table {
+        color: var(--text-color);
+      }
+      .dark-mode footer {
+        background-color: #1F1F1F;
+        color: var(--text-color);
+      }
+      .dark-mode footer a {
+        color: var(--accent-color);
+      }
+      /* Dark mode toggle button */
+      .dark-mode-toggle {
+        background-color: transparent;
+        border: none;
+        color: white;
+        font-size: 1.2rem;
+        cursor: pointer;
+        transition: color 0.3s ease;
+      }
+      .dark-mode-toggle:hover {
+        color: var(--accent-color);
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Animation Overlay -->
+    <div class="animation-overlay">
+      <div class="animation-content">
+        <i class="fas fa-seedling animate__animated animate__bounceIn" style="font-size: 100px;"></i>
+        <h2 class="mt-3 animate__animated animate__fadeInUp">Growing...</h2>
+      </div>
+    </div>
+
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark">
+      <div class="container-fluid">
+        <a class="navbar-brand" href="#">
+          <img src="https://cdn-icons-png.flaticon.com/512/628/628283.png" height="30" alt="Kheti Mitra Logo" loading="lazy" />
+          Kheti Mitra
+        </a>
+        <button class="navbar-toggler" type="button" data-mdb-toggle="collapse" data-mdb-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+          <i class="fas fa-bars"></i>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav ms-auto">
+            <li class="nav-item">
+              <a class="nav-link active" aria-current="page" href="#" data-translate="dashboard"><i class="fas fa-home"></i> Dashboard</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#" data-translate="profile"><i class="fas fa-user"></i> Profile</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#" data-translate="settings"><i class="fas fa-cog"></i> Settings</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="index.html" data-translate="logout"><i class="fas fa-sign-out-alt"></i> Logout</a>
+            </li>
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-mdb-toggle="dropdown" aria-expanded="false">
+                <i class="fas fa-language"></i> <span data-translate="language">Language</span>
+              </a>
+              <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                <li><a class="dropdown-item language-btn" href="#" data-lang="en">English</a></li>
+                <li><a class="dropdown-item language-btn" href="#" data-lang="hi">हिंदी (Hindi)</a></li>
+                <li><a class="dropdown-item language-btn" href="#" data-lang="pa">ਪੰਜਾਬੀ (Punjabi)</a></li>
+                <li><a class="dropdown-item language-btn" href="#" data-lang="bn">বাংলা (Bengali)</a></li>
+              </ul>
+            </li>
+            <li class="nav-item">
+              <button class="dark-mode-toggle" id="darkModeToggle">
+                <i class="fas fa-moon"></i>
+              </button>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="container my-5">
+      <div class="row">
+        <div class="col-lg-4 mb-4" data-aos="fade-right">
+          <!-- User Profile Card -->
+          <div class="card feature-card">
+            <div class="card-body">
+              <img src="https://www.vhv.rs/dpng/d/25-253788_indian-man-face-clipart-hd-png-download.png" class="rounded-circle mb-3" width="100" alt="Farmer Avatar">
+              <h5 class="card-title"><span data-translate="welcome" class="translate-fade">Welcome</span>, Sardar Singh</h5>
+              <p class="card-text"><i class="fas fa-map-marker-alt"></i> Punjab, India</p>
+              <p class="card-text"><i class="fas fa-clock"></i> <span data-translate="lastLogin" class="translate-fade">Last Login</span>: Today, 10:30 AM</p>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-8 mb-4" data-aos="fade-left">
+          <!-- Weather Widget -->
+          <div class="card feature-card">
+            <div class="card-body d-flex justify-content-between align-items-center">
+              <div>
+                <h5 class="card-title" data-translate="todayWeather" class="translate-fade">Today's Weather</h5>
+                <p class="card-text">Sunny, 25°C</p>
+                <p class="card-text">Humidity: 60% | Wind: 5 km/h</p>
+              </div>
+              <i class="fas fa-sun weather-icon"></i>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row mt-4">
+        <h2 class="text-center mb-4" data-translate="quickActions" class="translate-fade">Quick Actions</h2>
+        <div class="col-md-4 mb-4" data-aos="zoom-in">
+          <div class="card feature-card h-100">
+            <div class="card-body text-center">
+              <i class="fas fa-seedling feature-icon mb-3"></i>
+              <h5 class="card-title" data-translate="cropPredictor" class="translate-fade">Crop Predictor</h5>
+              <p class="card-text">Get AI-powered crop recommendations based on your soil and climate.</p>
+              <a href="input.html" class="btn btn-primary animate-btn" data-animation="seedling" data-translate="predictCrop" class="translate-fade">Predict Crop</a>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4 mb-4" data-aos="zoom-in" data-aos-delay="100">
+          <div class="card feature-card h-100">
+            <div class="card-body text-center">
+              <i class="fas fa-tint feature-icon mb-3"></i>
+              <h5 class="card-title" data-translate="soilHealth" class="translate-fade">Soil Health</h5>
+              <p class="card-text">Check your soil health, pH levels, and get fertilizer recommendations.</p>
+              <a href="soilindex.html" class="btn btn-primary animate-btn" data-animation="tint" data-translate="analyzeSoil" class="translate-fade">Analyze Soil</a>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4 mb-4" data-aos="zoom-in" data-aos-delay="200">
+          <div class="card feature-card h-100">
+            <div class="card-body text-center">
+              <i class="fas fa-hand-holding-usd feature-icon mb-3"></i>
+              <h5 class="card-title" data-translate="govtSchemes" class="translate-fade">Government Schemes</h5>
+              <p class="card-text">Explore latest agricultural policies and financial support schemes.</p>
+              <a href="govtpolicies.html" class="btn btn-primary animate-btn" data-animation="hand-holding-usd" data-translate="viewSchemes" class="translate-fade">View Schemes</a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row mt-4">
+        <div class="col-md-6 mb-4" data-aos="fade-up">
+          <div class="card feature-card h-100">
+            <div class="card-body text-center">
+              <i class="fas fa-tractor feature-icon mb-3"></i>
+              <h5 class="card-title" data-translate="equipmentRental" class="translate-fade">Equipment Rental</h5>
+              <p class="card-text">Rent farming equipment and machinery at affordable prices.</p>
+              <a href="#" class="btn btn-primary animate-btn" data-animation="tractor" data-translate="rentEquipment" class="translate-fade">Rent Equipment</a>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6 mb-4" data-aos="fade-up" data-aos-delay="100">
+          <div class="card feature-card h-100">
+            <div class="card-body text-center">
+              <i class="fas fa-comments feature-icon mb-3"></i>
+              <h5 class="card-title" data-translate="askExpert" class="translate-fade">Ask an Expert</h5>
+              <p class="card-text">Get expert answers to your farming questions in your local language.</p>
+              <a href="#" class="btn btn-primary animate-btn" data-animation="comments" data-translate="askNow" class="translate-fade">Ask Now</a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row mt-4">
+        <div class="col-12" data-aos="fade-up">
+          <div class="crop-calendar">
+            <h3 class="text-center mb-4" data-translate="cropCalendar" class="translate-fade">Crop Calendar</h3>
+            <div class="table-responsive">
+              <table class="table table-hover">
+                <thead>
+                  <tr>
+                    <th data-translate="crop" class="translate-fade">Crop</th>
+                    <th data-translate="sowingTime" class="translate-fade">Sowing Time</th>
+                    <th data-translate="harvestingTime" class="translate-fade">Harvesting Time</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>Wheat</td>
+                    <td>October - November</td>
+                    <td>March - April</td>
+                  </tr>
+                  <tr>
+                    <td>Rice</td>
+                    <td>June - July</td>
+                    <td>November - December</td>
+                  </tr>
+                  <tr>
+                    <td>Cotton</td>
+                    <td>April - May</td>
+                    <td>October - November</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-light text-center text-lg-start mt-5">
+      <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2);">
+        © 2023 Kheti Mitra - Empowering Farmers
+        <a class="text-dark" href="#">khetimitra.com</a>
+      </div>
+    </footer>
+
+    <!-- MDB -->
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/3.10.2/mdb.min.js"></script>
+    <!-- AOS -->
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+      AOS.init();
+
+      // Add click event listeners to all animate buttons
+      document.querySelectorAll('.animate-btn').forEach(btn => {
+        btn.addEventListener('click', function(e) {
+          e.preventDefault();
+          const overlay = document.querySelector('.animation-overlay');
+          const icon = overlay.querySelector('i');
+          const text = overlay.querySelector('h2');
+
+          // Set icon and text based on the clicked button's data-animation attribute
+          const animation = this.getAttribute('data-animation');
+          icon.className = `fas fa-${animation} animate__animated animate__bounceIn`;
+          
+          switch(animation) {
+            case 'seedling':
+              text.textContent = 'Predicting Crop...';
+              break;
+            case 'tint':
+              text.textContent = 'Analyzing Soil...';
+              break;
+            case 'hand-holding-usd':
+              text.textContent = 'Checking Schemes...';
+              break;
+            case 'tractor':
+              text.textContent = 'Finding Equipment...';
+              break;
+            case 'comments':
+              text.textContent = 'Connecting to Expert...';
+              break;
+            default:
+              text.textContent = 'Processing...';
+          }
+
+          // Show the overlay
+          overlay.style.display = 'flex';
+
+          // Hide the overlay after 2 seconds
+          setTimeout(() => {
+            overlay.style.display = 'none';
+            // Navigate to the href after the animation
+            window.location.href = this.getAttribute('href');
+          }, 2000);
+        });
+      });
+
+      // Language translation functionality
+      const translations = {
+        en: {
+          dashboard: "Dashboard",
+          profile: "Profile",
+          settings: "Settings",
+          logout: "Logout",
+          language: "Language",
+          welcome: "Welcome",
+          lastLogin: "Last Login",
+          todayWeather: "Today's Weather",
+          quickActions: "Quick Actions",
+          cropPredictor: "Crop Predictor",
+          predictCrop: "Predict Crop",
+          soilHealth: "Soil Health",
+          analyzeSoil: "Analyze Soil",
+          govtSchemes: "Government Schemes",
+          viewSchemes: "View Schemes",
+          equipmentRental: "Equipment Rental",
+          rentEquipment: "Rent Equipment",
+          askExpert: "Ask an Expert",
+          askNow: "Ask Now",
+          cropCalendar: "Crop Calendar",
+          crop: "Crop",
+          sowingTime: "Sowing Time",
+          harvestingTime: "Harvesting Time"
+        },
+        hi: {
+          dashboard: "डैशबोर्ड",
+          profile: "प्रोफ़ाइल",
+          settings: "सेटिंग्स",
+          logout: "लॉग आउट",
+          language: "भाषा",
+          welcome: "स्वागत है",
+          lastLogin: "अंतिम लॉगिन",
+          todayWeather: "आज का मौसम",
+          quickActions: "त्वरित कार्रवाई",
+          cropPredictor: "फसल भविष्यवक्ता",
+          predictCrop: "फसल की भविष्यवाणी करें",
+          soilHealth: "मिट्टी का स्वास्थ्य",
+          analyzeSoil: "मिट्टी का विश्लेषण करें",
+          govtSchemes: "सरकारी योजनाएं",
+          viewSchemes: "योजनाएं देखें",
+          equipmentRental: "उपकरण किराया",
+          rentEquipment: "उपकरण किराए पर लें",
+          askExpert: "विशेषज्ञ से पूछें",
+          askNow: "अभी पूछें",
+          cropCalendar: "फसल कैलेंडर",
+          crop: "फसल",
+          sowingTime: "बुवाई का समय",
+          harvestingTime: "कटाई का समय"
+        },
+        pa: {
+          dashboard: "ਡੈਸ਼ਬੋਰਡ",
+          profile: "ਪ੍ਰੋਫਾਈਲ",
+          settings: "ਸੈਟਿੰਗਾਂ",
+          logout: "ਲੌਗ ਆਊਟ",
+          language: "ਭਾਸ਼ਾ",
+          welcome: "ਜੀ ਆਇਆਂ ਨੂੰ",
+          lastLogin: "ਆਖਰੀ ਲੌਗਇਨ",
+          todayWeather: "ਅੱਜ ਦਾ ਮੌਸਮ",
+          quickActions: "ਤੇਜ਼ ਕਾਰਵਾਈਆਂ",
+          cropPredictor: "ਫਸਲ ਭਵਿੱਖਬਾਣੀ",
+          predictCrop: "ਫਸਲ ਦੀ ਭਵਿੱਖਬਾਣੀ ਕਰੋ",
+          soilHealth: "ਮਿੱਟੀ ਦੀ ਸਿਹਤ",
+          analyzeSoil: "ਮਿੱਟੀ ਦਾ ਵਿਸ਼ਲੇਸ਼ਣ ਕਰੋ",
+          govtSchemes: "ਸਰਕਾਰੀ ਯੋਜਨਾਵਾਂ",
+          viewSchemes: "ਯੋਜਨਾਵਾਂ ਵੇਖੋ",
+          equipmentRental: "ਉਪਕਰਣ ਕਿਰਾਏ 'ਤੇ",
+          rentEquipment: "ਉਪਕਰਣ ਕਿਰਾਏ 'ਤੇ ਲਓ",
+          askExpert: "ਮਾਹਰ ਤੋਂ ਪੁੱਛੋ",
+          askNow: "ਹੁਣੇ ਪੁੱਛੋ",
+          cropCalendar: "ਫਸਲ ਕੈਲੰਡਰ",
+          crop: "ਫਸਲ",
+          sowingTime: "ਬੀਜਣ ਦਾ ਸਮਾਂ",
+          harvestingTime: "ਵਾਢੀ ਦਾ ਸਮਾਂ"
+        },
+        bn: {
+          dashboard: "ড্যাশবোর্ড",
+          profile: "প্রোফাইল",
+          settings: "সেটিংস",
+          logout: "লগ আউট",
+          language: "ভাষা",
+          welcome: "স্বাগতম",
+          lastLogin: "শেষ লগইন",
+          todayWeather: "আজকের আবহাওয়া",
+          quickActions: "দ্রুত কার্যক্রম",
+          cropPredictor: "ফসল ভবিষ্যদ্বাণীকারী",
+          predictCrop: "ফসল পূর্বাভাস করুন",
+          soilHealth: "মাটির স্বাস্থ্য",
+          analyzeSoil: "মাটি বিশ্লেষণ করুন",
+          govtSchemes: "সরকারি প্রকল্প",
+          viewSchemes: "প্রকল্প দেখুন",
+          equipmentRental: "যন্ত্রপাতি ভাড়া",
+          rentEquipment: "যন্ত্রপাতি ভাড়া নিন",
+          askExpert: "বিশেষজ্ঞের কাছে জিজ্ঞাসা করুন",
+          askNow: "এখনই জিজ্ঞাসা করুন",
+          cropCalendar: "ফসল ক্যালেন্ডার",
+          crop: "ফসল",
+          sowingTime: "বীজ বোনার সময়",
+          harvestingTime: "ফসল কাটার সময়"
+        }
+      };
+
+      let currentLang = 'en';
+
+      function updateContent(lang) {
+        document.querySelectorAll('[data-translate]').forEach(element => {
+          const key = element.getAttribute('data-translate');
+          if (translations[lang] && translations[lang][key]) {
+            element.classList.add('fade-out');
+            setTimeout(() => {
+              element.textContent = translations[lang][key];
+              element.classList.remove('fade-out');
+              element.classList.add('fade-in');
+              setTimeout(() => {
+                element.classList.remove('fade-in');
+              }, 300);
+            }, 300);
+          }
+        });
+      }
+
+      document.querySelectorAll('.language-btn').forEach(btn => {
+        btn.addEventListener('click', function(e) {
+          e.preventDefault();
+          currentLang = this.getAttribute('data-lang');
+          updateContent(currentLang);
+        });
+      });
+
+      // Initial content update
+      updateContent(currentLang);
+
+      // Dark mode toggle functionality
+      const darkModeToggle = document.getElementById('darkModeToggle');
+      const body = document.body;
+      const icon = darkModeToggle.querySelector('i');
+
+      // Check for saved dark mode preference
+      if (localStorage.getItem('darkMode') === 'enabled') {
+        body.classList.add('dark-mode');
+        icon.classList.remove('fa-moon');
+        icon.classList.add('fa-sun');
+      }
+
+      darkModeToggle.addEventListener('click', () => {
+        body.classList.toggle('dark-mode');
+        if (body.classList.contains('dark-mode')) {
+          localStorage.setItem('darkMode', 'enabled');
+          icon.classList.remove('fa-moon');
+          icon.classList.add('fa-sun');
+        } else {
+          localStorage.setItem('darkMode', null);
+          icon.classList.remove('fa-sun');
+          icon.classList.add('fa-moon');
+        }
+      });
+    </script>
+  </body>
+</html>

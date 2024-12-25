@@ -18,7 +18,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser()); // Add cookie-parser middleware
 
 // Serve static files (HTML, CSS, JS) from 'views' folder
-app.use(express.static(path.join(__dirname, 'views')));
+app.use(express.static(__dirname));
 
 // Connect to MongoDB first
 mongoose.connect(process.env.MONGO_URI, { useNewUrlParser: true, useUnifiedTopology: true })

@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge" />
+    <title>Kheti Mitra</title>
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css" />
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet" />
+    <!-- MDB -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/3.10.2/mdb.min.css" rel="stylesheet" />
+    <!-- AOS -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <!-- Lottie Player -->
+    <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
+    <style>
+      :root {
+        --primary-color: #4CAF50;
+        --secondary-color: #45a049;
+        --text-color: #333;
+        --bg-color: #f1f8e9;
+        --dark-primary-color: #388E3C;
+        --dark-secondary-color: #2E7D32;
+        --dark-text-color: #E0E0E0;
+        --dark-bg-color: #121212;
+      }
+      body {
+        font-family: 'Roboto', sans-serif;
+        background-color: var(--bg-color);
+        color: var(--text-color);
+        transition: background-color 0.3s, color 0.3s;
+      }
+      body.dark-theme {
+        background-color: var(--dark-bg-color);
+        color: var(--dark-text-color);
+      }
+      .navbar {
+        background-color: var(--primary-color);
+        transition: background-color 0.3s;
+      }
+      .dark-theme .navbar {
+        background-color: var(--dark-primary-color);
+      }
+      .btn-primary {
+        background-color: var(--primary-color);
+      }
+      .btn-primary:hover {
+        background-color: var(--secondary-color);
+      }
+      .dark-theme .btn-primary {
+        background-color: var(--dark-primary-color);
+      }
+      .dark-theme .btn-primary:hover {
+        background-color: var(--dark-secondary-color);
+      }
+      .feature-card {
+        transition: transform 0.3s ease-in-out, background-color 0.3s;
+      }
+      .feature-card:hover {
+        transform: translateY(-10px);
+      }
+      .dark-theme .feature-card {
+        background-color: #1E1E1E;
+        color: var(--dark-text-color);
+      }
+      .language-btn {
+        transition: all 0.3s ease;
+      }
+      .language-btn:hover {
+        transform: scale(1.1);
+      }
+      .plant-animation {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(255, 255, 255, 0.9);
+        z-index: 9999;
+        display: none;
+        justify-content: center;
+        align-items: center;
+      }
+      .dark-theme .plant-animation {
+        background-color: rgba(18, 18, 18, 0.9);
+      }
+      .theme-toggle {
+        cursor: pointer;
+        padding: 5px 10px;
+        border-radius: 5px;
+        color: #fff;
+        transition: color 0.3s;
+      }
+      .dark-theme .theme-toggle {
+        color: #fff;
+      }
+      .theme-toggle i {
+        font-size: 1.2rem;
+        transition: color 0.3s;
+      }
+      .theme-toggle:hover i {
+        color: gold;
+      }
+      .btn-outline-primary:hover {
+        box-shadow: 0 0 10px 5px rgba(255, 0, 0, 0.5);
+        background-color: #ff0000;
+        border-color: #ff0000;
+        color: #ffffff;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="plant-animation" id="plantAnimation">
+      <lottie-player src="https://assets2.lottiefiles.com/packages/lf20_jbrw3hcz.json" background="transparent" speed="1" style="width: 300px; height: 300px;" loop autoplay></lottie-player>
+    </div>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark">
+      <div class="container-fluid">
+        <a class="navbar-brand" href="#">Kheti Mitra</a>
+        <button class="navbar-toggler" type="button" data-mdb-toggle="collapse" data-mdb-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+          <i class="fas fa-bars"></i>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav ms-auto">
+            <li class="nav-item">
+              <a class="nav-link active" aria-current="page" href="#" data-lang-key="home">Home</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#" data-lang-key="features">Features</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#" data-lang-key="about">About</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#" data-lang-key="contact">Contact</a>
+            </li>
+            <li class="nav-item">
+              <span class="nav-link theme-toggle" onclick="toggleTheme()">
+                <i class="fas fa-moon"></i>
+              </span>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+
+
+
+
+
+
+
+    <!-- Main Content -->
+    <div class="container my-5">
+      <div class="row">
+        <div class="col-lg-6" data-aos="fade-right">
+          <h1 class="display-4 mb-4" data-lang-key="welcome">Welcome to Kheti Mitra</h1>
+          <p class="lead mb-4" data-lang-key="empowering">Empowering farmers with AI-driven insights and real-time data for sustainable agriculture.</p>
+          
+          <!-- Login Form -->
+          <form action="https://kheti-mitra-auth.vercel.app/login" method="POST">
+            <input type="email" name="email" placeholder="Email" required />
+            <input type="password" name="password" placeholder="Password" required />
+            <button type="submit" class="btn btn-primary">Login</button>
+          </form>
+
+          <br>
+          
+          <a href="/register.html" class="btn btn-outline-primary btn-lg" data-lang-key="register">Register</a>
+        </div>
+        <div class="col-lg-6" data-aos="fade-left">
+          <!-- Uncomment and add an image source if needed -->
+          <!-- <img src="img/farmer.jpg" alt="Farmer in field" class="img-fluid rounded-3 shadow"> -->
+        </div>
+      </div>
+    </div>
+
+    
+
+
+
+
+
+
+
+
+
+
+      <div class="row mt-5">
+        <h2 class="text-center mb-4" data-lang-key="our-features">Our Features</h2>
+        <div class="col-md-4 mb-4" data-aos="zoom-in">
+          <div class="card feature-card h-100">
+            <div class="card-body">
+              <i class="fas fa-cloud-sun fa-3x mb-3 text-primary"></i>
+              <h5 class="card-title" data-lang-key="weather-soil">Weather & Soil Insights</h5>
+              <p class="card-text" data-lang-key="weather-soil-desc">Get real-time weather updates and soil analysis for informed decision-making.</p>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4 mb-4" data-aos="zoom-in" data-aos-delay="100">
+          <div class="card feature-card h-100">
+            <div class="card-body">
+              <i class="fas fa-robot fa-3x mb-3 text-primary"></i>
+              <h5 class="card-title" data-lang-key="ai-crop">AI Crop Recommendations</h5>
+              <p class="card-text" data-lang-key="ai-crop-desc">Receive personalized crop recommendations based on AI analysis.</p>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4 mb-4" data-aos="zoom-in" data-aos-delay="200">
+          <div class="card feature-card h-100">
+            <div class="card-body">
+              <i class="fas fa-chart-line fa-3x mb-3 text-primary"></i>
+              <h5 class="card-title" data-lang-key="market-price">Market Price Predictions</h5>
+              <p class="card-text" data-lang-key="market-price-desc">Stay ahead with accurate market price predictions for your crops.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="text-center mt-5">
+        <h3 class="mb-4" data-lang-key="choose-language">Choose Your Language</h3>
+        <button onclick="changeLanguage('en')" class="btn btn-outline-primary language-btn me-2 mb-2">English</button>
+        <button onclick="changeLanguage('hi')" class="btn btn-outline-primary language-btn me-2 mb-2">हिंदी</button>
+        <button onclick="changeLanguage('pa')" class="btn btn-outline-primary language-btn me-2 mb-2">ਪੰਜਾਬੀ</button>
+        <button onclick="changeLanguage('bn')" class="btn btn-outline-primary language-btn mb-2">বাঙ্গালী</button>
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-light text-center text-lg-start mt-5">
+      <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2);">
+        © 2023 Kheti Mitra:
+        <a class="text-dark" href="#">khetimitra.com</a>
+      </div>
+    </footer>
+
+    <!-- MDB -->
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/3.10.2/mdb.min.js"></script>
+    <!-- AOS -->
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+      AOS.init();
+
+      const translations = {
+        en: {
+          "home": "Home",
+          "features": "Features",
+          "about": "About",
+          "contact": "Contact",
+          "welcome": "Welcome to Kheti Mitra",
+          "empowering": "Empowering farmers with AI-driven insights and real-time data for sustainable agriculture.",
+          "login": "Login",
+          "register": "Register",
+          "our-features": "Our Features",
+          "weather-soil": "Weather & Soil Insights",
+          "weather-soil-desc": "Get real-time weather updates and soil analysis for informed decision-making.",
+          "ai-crop": "AI Crop Recommendations",
+          "ai-crop-desc": "Receive personalized crop recommendations based on AI analysis.",
+          "market-price": "Market Price Predictions",
+          "market-price-desc": "Stay ahead with accurate market price predictions for your crops.",
+          "choose-language": "Choose Your Language"
+        },
+        hi: {
+          "home": "होम",
+          "features": "सुविधाएँ",
+          "about": "हमारे बारे में",
+          "contact": "संपर्क करें",
+          "welcome": "खेती मित्र में आपका स्वागत है",
+          "empowering": "टिकाऊ कृषि के लिए AI-संचालित अंतर्दृष्टि और वास्तविक समय के डेटा के साथ किसानों को सशक्त बनाना।",
+          "login": "लॉग इन करें",
+          "register": "पंजीकरण करें",
+          "our-features": "हमारी सुविधाएँ",
+          "weather-soil": "मौसम और मिट्टी की जानकारी",
+          "weather-soil-desc": "सूचित निर्णय लेने के लिए वास्तविक समय के मौसम अपडेट और मिट्टी विश्लेषण प्राप्त करें।",
+          "ai-crop": "AI फसल सिफारिशें",
+          "ai-crop-desc": "AI विश्लेषण के आधार पर व्यक्तिगत फसल सिफारिशें प्राप्त करें।",
+          "market-price": "बाजार मूल्य भविष्यवाणियाँ",
+          "market-price-desc": "अपनी फसलों के लिए सटीक बाजार मूल्य भविष्यवाणियों के साथ आगे रहें।",
+          "choose-language": "अपनी भाषा चुनें"
+        },
+        pa: {
+          "home": "ਹੋਮ",
+          "features": "ਵਿਸ਼ੇਸ਼ਤਾਵਾਂ",
+          "about": "ਬਾਰੇ",
+          "contact": "ਸੰਪਰਕ ਕਰੋ",
+          "welcome": "ਖੇਤੀ ਮਿੱਤਰ ਵਿੱਚ ਤੁਹਾਡਾ ਸਵਾਗਤ ਹੈ",
+          "empowering": "ਟਿਕਾਊ ਖੇਤੀਬਾੜੀ ਲਈ AI-ਸੰਚਾਲਿਤ ਅੰਤਰਦ੍ਰਿਸ਼ਟੀ ਅਤੇ ਰੀਅਲ-ਟਾਈਮ ਡੇਟਾ ਨਾਲ ਕਿਸਾਨਾਂ ਨੂੰ ਸ਼ਕਤੀਸ਼ਾਲੀ ਬਣਾਉਣਾ।",
+          "login": "ਲਾਗਇਨ",
+          "register": "ਰਜਿਸਟਰ ਕਰੋ",
+          "our-features": "ਸਾਡੀਆਂ ਵਿਸ਼ੇਸ਼ਤਾਵਾਂ",
+          "weather-soil": "ਮੌਸਮ ਅਤੇ ਮਿੱਟੀ ਦੀ ਜਾਣਕਾਰੀ",
+          "weather-soil-desc": "ਸੂਚਿਤ ਫੈਸਲੇ ਲੈਣ ਲਈ ਰੀਅਲ-ਟਾਈਮ ਮੌਸਮ ਅੱਪਡੇਟ ਅਤੇ ਮਿੱਟੀ ਵਿਸ਼ਲੇਸ਼ਣ ਪ੍ਰਾਪਤ ਕਰੋ।",
+          "ai-crop": "AI ਫਸਲ ਸਿਫਾਰਸ਼ਾਂ",
+          "ai-crop-desc": "AI ਵਿਸ਼ਲੇਸ਼ਣ ਦੇ ਆਧਾਰ 'ਤੇ ਵਿਅਕਤੀਗਤ ਫਸਲ ਸਿਫਾਰਸ਼ਾਂ ਪ੍ਰਾਪਤ ਕਰੋ।",
+          "market-price": "ਬਾਜ਼ਾਰ ਮੁੱਲ ਭਵਿੱਖਬਾਣੀਆਂ",
+          "market-price-desc": "ਆਪਣੀਆਂ ਫਸਲਾਂ ਲਈ ਸਹੀ ਬਾਜ਼ਾਰ ਮੁੱਲ ਭਵਿੱਖਬਾਣੀਆਂ ਨਾਲ ਅੱਗੇ ਰਹੋ।",
+          "choose-language": "ਆਪਣੀ ਭਾਸ਼ਾ ਚੁਣੋ"
+        },
+        bn: {
+          "home": "হোম",
+          "features": "বৈশিষ্ট্য",
+          "about": "সম্পর্কে",
+          "contact": "যোগাযোগ",
+          "welcome": "খেতি মিত্রে আপনাকে স্বাগতম",
+          "empowering": "টেকসই কৃষির জন্য AI-চালিত অন্তর্দৃষ্টি এবং রিয়েল-টাইম ডেটা দিয়ে কৃষকদের ক্ষমতায়ন।",
+          "login": "লগইন",
+          "register": "নিবন্ধন",
+          "our-features": "আমাদের বৈশিষ্ট্য",
+          "weather-soil": "আবহাওয়া ও মাটির অন্তর্দৃষ্টি",
+          "weather-soil-desc": "অবহিত সিদ্ধান্ত নেওয়ার জন্য রিয়েল-টাইম আবহাওয়া আপডেট এবং মাটি বিশ্লেষণ পান।",
+          "ai-crop": "AI ফসল সুপারিশ",
+          "ai-crop-desc": "AI বিশ্লেষণের উপর ভিত্তি করে ব্যক্তিগতকৃত ফসল সুপারিশ পান।",
+          "market-price": "বাজার মূল্য পূর্বাভাস",
+          "market-price-desc": "আপনার ফসলের জন্য সঠিক বাজার মূল্য পূর্বাভাসের সাথে এগিয়ে থাকুন।",
+          "choose-language": "আপনার ভাষা চয়ন করুন"
+        }
+      };
+
+      function changeLanguage(lang) {
+        document.querySelectorAll('[data-lang-key]').forEach(element => {
+          const key = element.getAttribute('data-lang-key');
+          if (translations[lang] && translations[lang][key]) {
+            element.textContent = translations[lang][key];
+          }
+        });
+        document.documentElement.lang = lang;
+      }
+
+      function animateTransition(event) {
+        event.preventDefault();
+        const plantAnimation = document.getElementById('plantAnimation');
+        plantAnimation.style.display = 'flex';
+        setTimeout(() => {
+          window.location.href = event.target.href;
+        }, 3000);
+      }
+
+      function toggleTheme() {
+        document.body.classList.toggle('dark-theme');
+        const themeIcon = document.querySelector('.theme-toggle i');
+        if (document.body.classList.contains('dark-theme')) {
+          themeIcon.classList.remove('fa-moon');
+          themeIcon.classList.add('fa-sun');
+          localStorage.setItem('theme', 'dark');
+        } else {
+          themeIcon.classList.remove('fa-sun');
+          themeIcon.classList.add('fa-moon');
+          localStorage.setItem('theme', 'light');
+        }
+      }
+
+      // Check for saved theme preference or respect OS preference
+      const savedTheme = localStorage.getItem('theme');
+      const prefersDarkScheme = window.matchMedia('(prefers-color-scheme: dark)');
+      if (savedTheme === 'dark' || (savedTheme === null && prefersDarkScheme.matches)) {
+        document.body.classList.add('dark-theme');
+        document.querySelector('.theme-toggle i').classList.replace('fa-moon', 'fa-sun');
+      }
+    </script>
+  </body>
+</html>
