@@ -1,6 +1,6 @@
 <script>
   document.addEventListener('DOMContentLoaded', () => {
-    fetch('https://kheti-mitra-auth.vercel.app/validate-token', {
+    fetch('/api/validate-token', {
       method: 'POST',
       credentials: 'include', // Include cookies in the request
     })
