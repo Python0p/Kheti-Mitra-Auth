@@ -109,8 +109,17 @@ app.post('/login', async (req, res) => {
     }
 
     const token = generateToken(user._id);
-    res.cookie('jwt', token, { httpOnly: true, maxAge: 24 * 60 * 60 * 1000 }); // Store token in cookie
-    res.redirect('https://kheti-mitra-only-frontend.vercel.app/index.html'); // Redirect to index.html after successful login
+    
+    // Store token in HttpOnly cookie
+    res.cookie('jwt', token, {
+      httpOnly: true, // Cookie can't be accessed by JavaScript
+      secure: process.env.NODE_ENV === 'production', // Set to true only in production (ensures cookie is only sent over HTTPS)
+      sameSite: 'Strict', // Ensures cookie is sent only in same-site requests (helps mitigate CSRF)
+      maxAge: 24 * 60 * 60 * 1000, // Cookie expiry time (1 day)
+    });
+
+    // Redirect to the frontend page after successful login
+    res.redirect('https://kheti-mitra-only-frontend.vercel.app/index.html');
   } catch (err) {
     res.status(500).json({ message: 'Server error', error: err.message });
   }
@@ -120,3 +129,4 @@ app.post('/login', async (req, res) => {
 app.post('/validate-token', verifyToken, (req, res) => {
   res.status(200).json({ message: 'Token is valid' });
 });
+
