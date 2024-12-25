@@ -1,3 +1,6 @@
+// Serve static files (HTML, CSS, JS) from 'views' folder
+// app.use(express.static(__dirname));
+
 const express = require('express');
 const mongoose = require('mongoose');
 const bcrypt = require('bcryptjs');
@@ -18,23 +21,9 @@ app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser()); // Add cookie-parser middleware
 
 // Serve static files (HTML, CSS, JS) from 'views' folder
+// app.use(express.static(path.join(__dirname, 'views')));
+
 app.use(express.static(__dirname));
-
-// Connect to MongoDB first
-mongoose.connect(process.env.MONGO_URI, { useNewUrlParser: true, useUnifiedTopology: true })
-  .then(() => {
-    console.log('MongoDB connected');
-
-    // Start the server after successful MongoDB connection
-    const PORT = process.env.PORT || 3000;
-    app.listen(PORT, () => {
-      console.log(`Server running on port ${PORT}`);
-    });
-  })
-  .catch(err => {
-    console.error('MongoDB connection error:', err);
-    process.exit(1); // Exit process if MongoDB connection fails
-  });
 
 // Define User schema and model
 const userSchema = new mongoose.Schema({
@@ -66,7 +55,7 @@ const verifyToken = (req, res, next) => {
 };
 
 // Register route
-app.post('/register', async (req, res) => {
+app.post('/api/register', async (req, res) => {
   const { email, password } = req.body;
 
   if (!email || !password) {
@@ -109,24 +98,29 @@ app.post('/api/login', async (req, res) => {
     }
 
     const token = generateToken(user._id);
-    
-    // Store token in HttpOnly cookie
-    res.cookie('jwt', token, {
-      httpOnly: true, // Cookie can't be accessed by JavaScript
-      secure: process.env.NODE_ENV === 'production', // Set to true only in production (ensures cookie is only sent over HTTPS)
-      sameSite: 'Strict', // Ensures cookie is sent only in same-site requests (helps mitigate CSRF)
-      maxAge: 24 * 60 * 60 * 1000, // Cookie expiry time (1 day)
-    });
-
-    // Redirect to the frontend page after successful login
-    res.redirect('/index.html');
+    res.cookie('jwt', token, { httpOnly: true, maxAge: 24 * 60 * 60 * 1000 }); // Store token in cookie
+    res.redirect('/index.html'); // Redirect to index.html after successful login
   } catch (err) {
     res.status(500).json({ message: 'Server error', error: err.message });
   }
 });
 
 // Validate token route (for frontend to call)
-app.post('/validate-token', verifyToken, (req, res) => {
+app.post('/api/validate-token', verifyToken, (req, res) => {
   res.status(200).json({ message: 'Token is valid' });
 });
 
+// Connect to MongoDB and start the server
+mongoose
+  .connect(process.env.MONGO_URI, { useNewUrlParser: true, useUnifiedTopology: true })
+  .then(() => {
+    console.log('MongoDB connected');
+    const PORT = process.env.PORT || 3000;
+    app.listen(PORT, () => {
+      console.log(`Server running on port ${PORT}`);
+    });
+  })
+  .catch((err) => {
+    console.error('MongoDB connection error:', err);
+    process.exit(1); // Exit process if MongoDB connection fails
+  });
